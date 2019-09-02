@@ -66,9 +66,10 @@ PNG createSpotlight(PNG image, int centerX, int centerY) {
     for (unsigned y = 0; y < image.height(); y++) {
       HSLAPixel & pixel = image.getPixel(x,y);
       double euclideanDistance = sqrt((x-centerX)*(x-centerX)*1.0 + (y-centerY)*(y-centerY)*1.0);
-      pixel.l = pixel.l * (1 - euclideanDistance*0.005);
-      if(euclideanDistance > 200) {
-        pixel.l = 0.0;
+      if(euclideanDistance >= 160) {
+        pixel.l = 0.2*pixel.l;
+      } else {
+        pixel.l = pixel.l * (1 - euclideanDistance*0.005);
       }
     }
   }
