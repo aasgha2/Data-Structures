@@ -22,6 +22,7 @@ using std::vector;
 #include "lodepng/lodepng.h"
 #include "PNG.h"
 #include "RGB_HSL.h"
+#include "HSLAPixel.h"
 
 
 namespace cs225 {
