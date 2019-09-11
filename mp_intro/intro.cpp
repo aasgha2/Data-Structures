@@ -1,6 +1,5 @@
 #include "cs225/PNG.h"
 #include "cs225/HSLAPixel.h"
-#include "cs225/lodepng/lodepng.h"
 using namespace cs225;
 #include <string>
 
@@ -29,23 +28,23 @@ void rotate(std::string inputFile, std::string outputFile) {
 
 cs225::PNG myArt(unsigned int width, unsigned int height) {
   cs225::PNG png(width, height);
-  HSLAPixel *green = new HSLAPixel(104, 0.8, 0.5);
-  HSLAPixel *red = new HSLAPixel(343, 0.8, 0.5);
-  HSLAPixel *black = new HSLAPixel(0, 0, 0);
+  HSLAPixel *g = new HSLAPixel(104, 0.8, 0.5);
+  HSLAPixel *r = new HSLAPixel(343, 0.8, 0.5);
+  HSLAPixel *b = new HSLAPixel(0, 0, 0);
 
   for (unsigned x = 0; x < png.width(); x++) {
     for (unsigned y = 0; y < png.height(); y++) {
       HSLAPixel & currPixel = png.getPixel(x, y);
-      if (x <= 20) {
-        currPixel = *red;
+      if (x < (png.width()/3)) {
+        currPixel = *r;
       }
 
-      if ((x < 50) && (x > 400)) {
-        currPixel = *black;
+      if ((x < (png.width*(2/3))) {
+        currPixel = *b;
       }
 
-      if (x >= 400) {
-        currPixel = *green;
+      if (x >= (png.width*(2/3))) {
+        currPixel = *g;
       }
 
     }
