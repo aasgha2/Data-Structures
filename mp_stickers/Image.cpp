@@ -164,9 +164,9 @@ using cs225::HSLAPixel;
   }
 
   void Image::scale(unsigned w, unsigned h) {
-    double widthR = w/this->width() * 1.0;
-    double heightR = h/this->height() * 1.0;
-    if (((widthR * this->height() <= h))) {
+    double widthR = (w*1.0)/(this->width() * 1.0);
+    double heightR = (h*1.0)/(this->height() * 1.0);
+    if (((widthR < heightR))) {
       scale(widthR);
     } else {
       scale (heightR);

@@ -4,4 +4,29 @@
  */
 #pragma once
 
- 
+
+#include "Image.h"
+using namespace cs225;
+
+class StickerSheet {
+public:
+  StickerSheet(const Image &picture, unsigned max);
+  ~StickerSheet();
+  StickerSheet(const StickerSheet &other);
+  const StickerSheet& operator=(const StickerSheet &other);
+  void changeMaxStickers(unsigned max);
+  int addSticker(Image &sticker, unsigned x, unsigned y);
+  bool translate(unsigned index, unsigned x, unsigned y);
+  void removeSticker(unsigned index);
+  Image* getSticker(unsigned index) const;
+  Image render() const;
+
+private:
+  Image* *stickers_;
+  unsigned count_;
+  unsigned max_;
+  unsigned *xPos_;
+  unsigned *yPos_;
+  Image picture_;
+  void copy(const StickerSheet &other);
+};
