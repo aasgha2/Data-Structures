@@ -329,40 +329,40 @@ typename List<T>::ListNode * List<T>::merge(ListNode * first, ListNode* second) 
   if (second == NULL){
     return first;
   }
-  ListNode* mergedHead = NULL;
+  ListNode* mergeFront = NULL;
   if (first->data < second->data){
-    mergedHead = first;
+    mergeFront = first;
     first = first->next;
   }
   else {
-    mergedHead = second;
+    mergeFront = second;
     second = second->next;
   }
-  ListNode* mergeTracker = mergedHead;
+  ListNode* mergeCount = mergeFront;
   while (first!=NULL && second!=NULL){
     if (first->data < second->data){
-      first->prev = mergeTracker;
-      mergeTracker->next = first;
+      first->prev = mergeCount;
+      mergeCount->next = first;
       first = first->next;
     }
     else {
-      second->prev = mergeTracker;
-      mergeTracker->next = second;
+      second->prev = mergeCount;
+      mergeCount->next = second;
       second = second->next;
     }
-    mergeTracker = mergeTracker->next;
+    mergeCount = mergeCount->next;
   }
 
   if (first == NULL){
-     second->prev = mergeTracker;
-     mergeTracker->next = second;
+     second->prev = mergeCount;
+     mergeCount->next = second;
   }
   if (second == NULL){
-     first->prev = mergeTracker;
-     mergeTracker->next = first;
+     first->prev = mergeCount;
+     mergeCount->next = first;
   }
 
-   return mergedHead;
+   return mergeFront;
 }
 
 /**
