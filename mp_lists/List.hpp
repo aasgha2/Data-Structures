@@ -320,14 +320,8 @@ template <typename T>
 typename List<T>::ListNode * List<T>::merge(ListNode * first, ListNode* second) {
   /// @todo Graded in MP3.2
 
-  if (first == NULL && second == NULL){
-    return NULL;
-  }
-  if (first == NULL){
-    return second;
-  }
-  if (second == NULL){
-    return first;
+  if (first == NULL || second == NULL) {
+    return NULL;;
   }
   ListNode* mergeFront = NULL;
   if (first->data < second->data){
