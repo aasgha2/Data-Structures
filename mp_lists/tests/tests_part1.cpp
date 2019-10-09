@@ -20,33 +20,73 @@ using namespace cs225;
 TEST_CASE("List::insertFront size", "[weight=1][part=1][valgrind]") {
     List<int> list;
 
-    for (unsigned i = 0; i < 10; i++) { list.insertFront(i); }
+
+    for (unsigned i = 0; i < 10; i++) {
+        list.insertFront(i); }
+
+        cout << "finished making list for test case 1" << endl;
+
+
+    stringstream s;
+    list.print(s);
+        cout << "finished printing list for test case 1" << endl;
+
 
     REQUIRE( 10 == list.size() );
+
+        cout << "finished test case 1 and list size = " << list.size() << endl;
+        cout << list << endl;
+
 }
 
 TEST_CASE("List::insertBack size", "[weight=2][part=1][valgrind]") {
     List<int> list;
 
+    cout << "starting test case 2" << endl;
+
+
     for (unsigned i = 0; i < 10; i++) { list.insertBack(i); }
 
+    cout << "finished making list for test case 2" << endl;
+
     REQUIRE( 10 == list.size() );
+
+    cout << "finished test case 2 and list size = " << list.size() << endl;
+    cout << list << endl;
 }
 
 TEST_CASE("List::insert contents", "[weight=4][part=1][valgrind]") {
     List<int> list;
 
+    cout << "got here 1" << endl;
+
+
     list.insertBack(3);
+    cout << "got here 2" << endl;
+
     list.insertBack(2);
+    cout << "got here 3" << endl;
+
     list.insertBack(1);
+    cout << "got here 4" << endl;
+
     list.insertFront(3);
+    cout << "got here 5" << endl;
+
     list.insertFront(2);
+    cout << "got here 6" << endl;
+
     list.insertFront(1);
+    cout << "got here 7" << endl;
+
 
     stringstream s;
     list.print(s);
 
     REQUIRE( "< 1 2 3 3 2 1 >" == s.str() );
+
+    cout << "finished test case 3" << endl;
+    cout << list << endl;
 }
 
 
@@ -237,5 +277,3 @@ TEST_CASE("List::ListIterator::end is not ::begin in a non-empty list", "[weight
 
     REQUIRE( (bool)(list.begin() != list.end()) );
 }
-
-
