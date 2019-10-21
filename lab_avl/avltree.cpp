@@ -45,6 +45,8 @@ void AVLTree<K, V>::rotateLeft(Node*& t)
 template <class K, class V>
 void AVLTree<K, V>::rotateLeftRight(Node*& t)
 {
+  cout << __LINE__ << endl;
+
     functionCalls.push_back("rotateLeftRight"); // Stores the rotation name (don't remove this)
     // Implemented for you:
     rotateLeft(t->left);
@@ -54,6 +56,8 @@ void AVLTree<K, V>::rotateLeftRight(Node*& t)
 template <class K, class V>
 void AVLTree<K, V>::rotateRight(Node*& t)
 {
+  cout << __LINE__ << endl;
+
     functionCalls.push_back("rotateRight"); // Stores the rotation name (don't remove this)
     // your code here
     Node* tempNode = t->left;
@@ -68,6 +72,8 @@ void AVLTree<K, V>::rotateRight(Node*& t)
 template <class K, class V>
 void AVLTree<K, V>::rotateRightLeft(Node*& t)
 {
+  cout << __LINE__ << endl;
+
     functionCalls.push_back("rotateRightLeft"); // Stores the rotation name (don't remove this)
     // your code here
     rotateRight(t->right);
@@ -109,15 +115,22 @@ template <class K, class V>
 void AVLTree<K, V>::insert(Node*& subtree, const K& key, const V& value)
 {
     if(subtree == NULL) {
-      subtree = new Node(key, value);
+      cout << __LINE__ << endl;
+
+      Node *temp = new Node(key, value);
+      subtree = temp;
       return;
     }
 
     if(key < subtree->key) {
+      cout << __LINE__ << endl;
+
       insert(subtree->left, key, value);
     } else {
       insert(subtree->right, key, value);
     }
+    cout << __LINE__ << endl;
+
     rebalance(subtree);
 }
 
@@ -147,6 +160,7 @@ void AVLTree<K, V>::remove(Node*& subtree, const K& key)
            Node* curr = subtree->left;
            while(subtree->right != NULL) {
              curr = curr->right;
+             cout << __LINE__ << endl;
            }
            swap(curr, subtree);
            remove(subtree->left, key);
