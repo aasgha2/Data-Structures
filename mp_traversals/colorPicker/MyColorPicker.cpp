@@ -3,8 +3,10 @@
 
 #include "ColorPicker.h"
 #include "MyColorPicker.h"
+#include <cmath>
 
 using namespace cs225;
+using namespace std;
 
 /**
  * Picks the color for pixel (x, y).
@@ -12,5 +14,10 @@ using namespace cs225;
  */
 HSLAPixel MyColorPicker::getColor(unsigned x, unsigned y) {
   /* @todo [Part 3] */
-  return HSLAPixel();
+  double hue = (360 - 1*y/x);
+  int hue2 = hue/1;
+  int hue3 = abs(hue2);
+  HSLAPixel pixel(hue3, 1, 0.5);
+  return pixel;
+
 }
