@@ -7,6 +7,7 @@
 #include "cs225/PNG.h"
 #include <list>
 #include <iostream>
+#include <queue>
 
 #include "colorPicker/ColorPicker.h"
 #include "imageTraversal/ImageTraversal.h"
@@ -15,6 +16,7 @@
 #include "Animation.h"
 
 using namespace cs225;
+using namespace std;
 /**
  * This class is used to do flood fill on an image.
  * One or more FloodFill operations will be added and executed in the order they
@@ -30,5 +32,9 @@ public:
 private:
 	/** @todo [Part 2] */
 	/** add private members here*/
+  PNG image_;
+  vector<PNG> frames;
+  vector<ImageTraversal*> traversal_;
+  vector<ColorPicker*> colorPicker_;
 
 };

@@ -32,7 +32,17 @@ public:
   Point peek() const;
   bool empty() const;
 
+  //extra methods
+  Point getStart();
+  double getTolerance();
+  PNG getImage();
+
+
 private:
   /** @todo [Part 1] */
   /** add private members here*/
+  Point start_;
+  double tolerance_;
+  PNG image_;
+  std::queue<Point> queue_;
 };

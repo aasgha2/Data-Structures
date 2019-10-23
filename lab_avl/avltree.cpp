@@ -86,13 +86,18 @@ void AVLTree<K, V>::rebalance(Node*& subtree)
   if(subtree == NULL) {
     return;
   }
+  cout << __LINE__ << endl;
 
     int balanceFactor = heightOrNeg1(subtree->right) - heightOrNeg1(subtree->left);
     if (balanceFactor == -2) {
     int leftBalance = heightOrNeg1(subtree->left->right) - heightOrNeg1(subtree->left->left);
     if(leftBalance == -1) {
+      cout << __LINE__ << endl;
+
       rotateRight(subtree);
     } else {
+      cout << __LINE__ << endl;
+
       rotateLeftRight(subtree);
     }
   } else if (balanceFactor == 2) {
