@@ -14,7 +14,7 @@ using namespace std;
  */
 HSLAPixel MyColorPicker::getColor(unsigned x, unsigned y) {
   /* @todo [Part 3] */
-  double hue = (360 - 1*y/x);
+  double hue = (360 - y/20);
   int hue2 = hue/1;
   int hue3 = abs(hue2);
   HSLAPixel pixel(hue3, 1, 0.5);
