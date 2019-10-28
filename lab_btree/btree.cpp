@@ -51,9 +51,7 @@ V BTree<K, V>::find(const BTreeNode* subroot, const K& key) const
      * a leaf and we didn't find the key in it, then we have failed to find it
      * anywhere in the tree and return the default V.
      */
-
-    return V();
-}
+   }
 
 /**
  * Inserts a key and value into the BTree. If the key is already in the
@@ -150,14 +148,18 @@ void BTree<K, V>::split_child(BTreeNode* parent, size_t child_idx)
 
 
     /* TODO Your code goes here! */
+
     parent->elements.insert(elem_itr, *mid_elem_itr);
     parent->children.insert(child_itr, new_right);
 
     new_right->elements.assign(mid_elem_itr + 1, child->elements.end());
-    new_right->children.assign(mid_child_itr, child->children.end());
+    if(!new_left->is_leaf)
+      new_right->children.assign(mid_child_itr, child->children.end());
 
     new_left->elements.assign(child->elements.begin(), mid_elem_itr);
-    new_left->children.assign(child->children.begin(), mid_child_itr);
+    if(!new_left->is_leaf)
+      new_left->children.assign(child->children.begin(), mid_child_itr);
+    return;
 
 }
 
@@ -192,6 +194,7 @@ void BTree<K, V>::insert(BTreeNode* subroot, const DataPair& pair)
             split_child(subroot, first_larger_idx);
           }
         }
+        return;
       }
 
 }
