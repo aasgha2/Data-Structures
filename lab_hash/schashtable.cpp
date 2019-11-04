@@ -4,6 +4,10 @@
  */
 
 #include "schashtable.h"
+using std::pair;
+using hashes::hash;
+using namespace std;
+
 
 template <class K, class V>
 SCHashTable<K, V>::SCHashTable(size_t tsize)
@@ -54,6 +58,13 @@ void SCHashTable<K, V>::insert(K const& key, V const& value)
      * @todo Implement this function.
      *
      */
+     elems = elems+1;
+     if (shouldResize() == true)
+         resizeTable();
+     pair<K, V> p(key, value);
+     size_t idx = hashes::hash(key, size);
+     table[idx].push_front(p);
+
 }
 
 template <class K, class V>
@@ -66,16 +77,30 @@ void SCHashTable<K, V>::remove(K const& key)
      * Please read the note in the lab spec about list iterators and the
      * erase() function on std::list!
      */
-    (void) key; // prevent warnings... When you implement this function, remove this line.
+     int index = hashes::hash(key, size);
+     for(it = table[index].begin(); it != table[index].end();){
+       if(it->first == key){
+         table[index].erase(it);
+         break;
+       }
+       else {
+         it++;
+       }
+}
 }
 
 template <class K, class V>
 V SCHashTable<K, V>::find(K const& key) const
 {
-
     /**
      * @todo: Implement this function.
      */
+     size_t idx = hashes::hash(key, size);
+     typename list<pair<K, V>>::iterator it;
+     for (it = table[idx].begin(); it != table[idx].end(); it++) {
+       if (it->first == key)
+          return it->second;
+        }
 
     return V();
 }
@@ -134,4 +159,19 @@ void SCHashTable<K, V>::resizeTable()
      *
      * @hint Use findPrime()!
      */
-}
+     size_t newSize = findPrime(size*2);
+     std::list<std::pair<K,V>>* newTable = new list<pair<K,V>>[newSize];
+     for (size_t i = 0; i < size; i++) {
+       for (it = table[i].begin(); it != table[i].end(); it++) {
+         K key = it->first;
+         V value = it->second;
+         pair<K, V> p(key, value);
+         size_t index = hashes::hash(key, newSize);
+         newTable[index].push_front(p);
+
+       }
+     }
+     delete[] table;
+     table = newTable;
+     size = newSize;
+   }

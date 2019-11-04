@@ -4,6 +4,11 @@
  */
 
 #include "dhhashtable.h"
+using std::pair;
+using hashes::hash;
+using namespace std;
+
+
 
 template <class K, class V>
 DHHashTable<K, V>::DHHashTable(size_t tsize)
@@ -81,8 +86,21 @@ void DHHashTable<K, V>::insert(K const& key, V const& value)
      *  forget to mark the cell for probing with should_probe!
      */
 
-    (void) key;   // prevent warnings... When you implement this function, remove this line.
-    (void) value; // prevent warnings... When you implement this function, remove this line.
+     elems = elems +1;
+     if (shouldResize() == true)
+         resizeTable();
+       size_t h = hashes::hash(key, size);
+       size_t j = hashes::secondary_hash(key, size);
+       size_t index = h;
+       size_t i = 0;
+     while (table[index] != NULL) {
+       i++;
+       index = (index + j*i) % size;
+     }
+
+     table[index] = new pair<K, V>(key, value);
+     should_probe[index] = true;
+
 }
 
 template <class K, class V>
@@ -91,6 +109,13 @@ void DHHashTable<K, V>::remove(K const& key)
     /**
      * @todo Implement this function
      */
+     int index = findIndex(key);
+     if (index != -1) {
+       delete table[index];
+       table[index] = NULL;
+       elems = elems - 1;
+}
+
 }
 
 template <class K, class V>
@@ -99,7 +124,22 @@ int DHHashTable<K, V>::findIndex(const K& key) const
     /**
      * @todo Implement this function
      */
-    return -1;
+     size_t index = hashes::hash(key, size);
+     size_t jump = hashes::secondary_hash(key, size);
+     size_t start = index;
+     size_t i = 0;
+     while (should_probe[index]) {
+       ++i;
+       if (table[index] != NULL && table[index]->first == key) {
+         return index;
+       }
+       index = (index + jump*i) % size;
+
+       if (index == start) {
+         break;
+       }
+     }
+     return -1;
 }
 
 template <class K, class V>
@@ -160,7 +200,7 @@ void DHHashTable<K, V>::resizeTable()
             size_t h = hashes::hash(table[slot]->first, newSize);
             size_t jump = hashes::secondary_hash(table[slot]->first, newSize);
             size_t i = 0;
-            size_t idx = h; 
+            size_t idx = h;
             while (temp[idx] != NULL)
             {
                 ++i;
