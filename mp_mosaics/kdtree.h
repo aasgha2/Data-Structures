@@ -230,6 +230,7 @@ class KDTree
      *  tree.
      * @return The closest point to a in the KDTree.
      */
+    int findNearestHelper(const Point<Dim>& q, int dim, int l, int r) const;
     Point<Dim> findNearestNeighbor(const Point<Dim>& query) const;
 
     // functions used for grading:
@@ -248,6 +249,8 @@ class KDTree
     /** Internal representation, root and size **/
     KDTreeNode *root;
     size_t size;
+    vector<Point<Dim>> points;
+    int count;
 
     /** Helper function for grading */
     int getPrintData(KDTreeNode * subroot) const;
@@ -259,6 +262,11 @@ class KDTree
     /**
      * @todo Add your helper functions here.
      */
+     void constructor(int s, int e, int d, KDTreeNode *& subroot);
+     Point<Dim> quickSelectSort(int s, int e, int k , int d);
+     int partition(int s, int e, int k, int d);
+     void destructor(KDTreeNode *&subroot);
+      double dist(const Point<Dim>& a, const Point<Dim>& b) const;
 };
 
 #include "kdtree.hpp"

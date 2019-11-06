@@ -18,10 +18,28 @@ Point<3> convertToXYZ(LUVAPixel pixel) {
 MosaicCanvas* mapTiles(SourceImage const& theSource,
                        vector<TileImage>& theTiles)
 {
-    /**
-     * @todo Implement this function!
-     */
+  vector<Point<3>> tile_colors;
+  map<Point<3>, TileImage*> color_to_tile;
 
-    return NULL;
+  for (unsigned int i = 0; i < theTiles.size(); i++) {
+    LUVAPixel color = theTiles[i].getAverageColor();
+    color_to_tile[convertToXYZ(color)] = &theTiles[i];
+    tile_colors.push_back(convertToXYZ(color));
+  }
+
+  KDTree<3> color_tree(tile_colors);
+  int rows = theSource.getRows();
+  int columns = theSource.getColumns();
+
+  MosaicCanvas *canvas = new MosaicCanvas(rows, columns);
+
+  for (int x = 0; x < rows; x++) {
+      for (int y = 0; y < columns; y++) {
+          LUVAPixel sc = theSource.getRegionColor(x, y);
+          TileImage* tile = color_to_tile[color_tree.findNearestNeighbor(convertToXYZ(sc))];
+          canvas->setTile(x, y, tile);
+      }
+  }
+
+  return canvas;
 }
-
