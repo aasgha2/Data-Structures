@@ -23,8 +23,19 @@ using namespace std;
 vector<std::tuple<std::string, std::string, std::string>> cartalk_puzzle(PronounceDict d,
                                     const string& word_list_fname)
 {
-    vector<std::tuple<std::string, std::string, std::string>> ret;
-
-    /* Your code goes here! */
-    return ret;
+  vector<std::tuple<std::string, std::string, std::string>> ret;
+  ifstream wordsFile(word_list_fname);
+  string word;
+  if (wordsFile.is_open()) {
+    while (getline(wordsFile, word)) {
+      if (!(word.size() < 3)) {
+      string first = word.substr(1);
+      string second = word[0] + word.substr(2);
+      if (d.homophones(word, first) && d.homophones(word, second)) {
+        ret.push_back(tuple<string,string,string>(word, first, second));
+      }
+    }
+    }
+  }
+  return ret;
 }
