@@ -102,23 +102,38 @@ std::vector< int > SquareMaze::solveMaze() {
     if (y == height_ - 1) {
       _lastRow.push_back(maze_pos);
     }
-    for(int i = 0; i <= 3; i++) {
-      if (canTravel(x, y, i)) {
-        if (i % 2 == 0) {
-          if (!visited_[x+map[i]][y] && x < width_) {
-            _path.insert(std::pair<int, int> (maze_pos + (map[i] * 1), maze_pos));
-            visited_[x+map[i]][y] = true;
-            position_.push(std::pair<int, int>(x+map[i], y));
+
+      if (canTravel(x, y, 0)) {
+          if (!visited_[x+map[0]][y] && x < width_) {
+            _path.insert(std::pair<int, int> (maze_pos + (map[0] * 1), maze_pos));
+            visited_[x+map[0]][y] = true;
+            position_.push(std::pair<int, int>(x+map[0], y));
           }
-        } else {
-          if (!visited_[x][y+map[i]] && y < height_) {
-            _path.insert(std::pair<int, int> (maze_pos + (map[i] * width_), maze_pos));
-            visited_[x][y+map[i]] = true;
-            position_.push(std::pair<int, int>(x, y+map[i]));
+      }
+
+      if (canTravel(x, y, 1)) {
+          if (!visited_[x][y+map[1]] && y < height_) {
+            _path.insert(std::pair<int, int> (maze_pos + (map[1] * width_), maze_pos));
+            visited_[x][y+map[1]] = true;
+            position_.push(std::pair<int, int>(x, y+map[1]));
           }
         }
+
+      if (canTravel(x, y, 2)) {
+          if (!visited_[x+map[2]][y] && x < width_) {
+            _path.insert(std::pair<int, int> (maze_pos + (map[2] * 1), maze_pos));
+            visited_[x+map[2]][y] = true;
+            position_.push(std::pair<int, int>(x+map[2], y));
+          }
       }
-    }
+
+      if (canTravel(x, y, 3)) {
+          if (!visited_[x][y+map[3]] && y < height_) {
+            _path.insert(std::pair<int, int> (maze_pos + (map[3] * width_), maze_pos));
+            visited_[x][y+map[3]] = true;
+            position_.push(std::pair<int, int>(x, y+map[3]));
+          }
+        }
   }
   if (!dirs_.empty()) {
     dirs_.clear();
